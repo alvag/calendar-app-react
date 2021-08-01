@@ -66,3 +66,24 @@ html, body {
 	display: flex;
 	border: 0 solid gray !important;
 }
+
+/*Fab*/
+
+.fab-danger,
+.fab {
+	bottom: 25px;
+	position: fixed;
+	z-index: 9;
+}
+
+.fab {
+	border-radius: 100%;
+	right: 25px;
+	padding: 25px;
+	font-size: 30px;
+}
+
+.fab-danger {
+	left: 25px;
+	padding: 10px;
+}
