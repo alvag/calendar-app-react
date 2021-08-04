@@ -1,14 +1,18 @@
 import React from 'react';
 import { useForm } from '../../hooks/useForm';
 import validator from 'validator/es';
+import { useDispatch } from 'react-redux';
+import { startRegister } from '../../redux/actions/authActions';
 
 export const RegisterForm = () => {
 
+	const dispatch = useDispatch();
+
 	const form = useForm( {
-			name: 'Max',
-			email: 'aaa@aaa.com',
+			name: 'Test 1',
+			email: 'test1@gmail.com',
 			password: '123456',
-			confirmPassword: '1234561'
+			confirmPassword: '123456'
 		}, {
 			name: validator.isEmpty,
 			email: validator.isEmail,
@@ -36,7 +40,7 @@ export const RegisterForm = () => {
 	);
 
 	function handleRegister() {
-		console.log( 'handleRegister', form.values );
+		dispatch( startRegister( form.values ) );
 	}
 
 	return (
@@ -46,7 +50,7 @@ export const RegisterForm = () => {
 				<div className="form-group">
 					<input
 						type="text"
-						className="form-control"
+						className={`form-control ${form.errors.name ? 'is-invalid' : ''}`}
 						placeholder="Nombre"
 						name="name"
 						value={form.values.name}
@@ -56,7 +60,7 @@ export const RegisterForm = () => {
 				<div className="form-group">
 					<input
 						type="email"
-						className="form-control"
+						className={`form-control ${form.errors.email ? 'is-invalid' : ''}`}
 						placeholder="Correo"
 						name="email"
 						value={form.values.email}
@@ -66,7 +70,7 @@ export const RegisterForm = () => {
 				<div className="form-group">
 					<input
 						type="password"
-						className="form-control"
+						className={`form-control ${form.errors.password ? 'is-invalid' : ''}`}
 						placeholder="Contraseña"
 						name="password"
 						value={form.values.password}
@@ -77,7 +81,7 @@ export const RegisterForm = () => {
 				<div className="form-group">
 					<input
 						type="password"
-						className="form-control"
+						className={`form-control ${form.errors.confirmPassword ? 'is-invalid' : ''}`}
 						placeholder="Repita la contraseña"
 						name="confirmPassword"
 						value={form.values.confirmPassword}
@@ -85,9 +89,13 @@ export const RegisterForm = () => {
 					/>
 				</div>
 
-				<div className="text-danger mb-2">
-					Error
-				</div>
+				{
+					form.errors.passwordMatch &&
+					<div className="text-danger mb-2">
+						{form.errors.passwordMatch}
+					</div>
+				}
+
 
 				<div className="form-group">
 					<input
